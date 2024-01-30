@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ComicRequest;
 use App\Models\Comic;
 use Illuminate\Http\Request;
 
@@ -22,15 +23,21 @@ class ComicController extends Controller
      */
     public function create()
     {
-        //
+        return view('comics.create');    
+    
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ComicRequest $request)
     {
-        //
+        $data = $request->all();
+        $newComic = new Comic();
+        $newComic->fill($data);
+        $newComic->save();
+
+      return  redirect()->route('comics.show',$newComic);
     }
 
     /**
@@ -38,7 +45,8 @@ class ComicController extends Controller
      */
     public function show(Comic $comic)
     {
-        //
+        
+        return view('comics.show',compact('comic'));
     }
 
     /**
@@ -46,15 +54,18 @@ class ComicController extends Controller
      */
     public function edit(Comic $comic)
     {
-        //
+        return view('comics.edit',compact('comic'));    
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comic $comic)
+    public function update(ComicRequest $request, Comic $comic)
     {
-        //
+        $data = $request->all();
+        $comic->update($data);
+
+        return redirect()->route('comics.show',$comic);
     }
 
     /**
@@ -62,6 +73,8 @@ class ComicController extends Controller
      */
     public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+
+        return redirect()->route('comics.index');
     }
 }

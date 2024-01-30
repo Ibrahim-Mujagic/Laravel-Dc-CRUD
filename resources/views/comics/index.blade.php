@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
   <div>
+    <a class="btn btn-primary mb-4" href="{{route('comics.create')}}"><i class="fa-solid fa-plus"></i></a>
     {{$comics->links()}}
   </div>
   <table class="table table-striped shadow">
@@ -23,9 +24,9 @@
             <td>{{$comic->price}}</td>
             <td>{{$comic->type}}</td>
             <td class="text-center">
-              <a class="btn btn-primary" href=""><i class="fa-solid fa-eye"></i></a>
-              <a class="btn btn-warning" href=""><i class="fa-solid fa-pencil"></i></a>
-              <a class="btn btn-danger" href=""><i class="fa-solid fa-trash"></i></a>
+              <a class="btn btn-primary" href="{{route('comics.show',$comic)}}"><i class="fa-solid fa-eye"></i></a>
+              <a class="btn btn-warning" href="{{route('comics.edit',$comic)}}"><i class="fa-solid fa-pencil"></i></a>
+              @include('partials.form-delete',[$comic])
             </td>
           </tr>
       @empty
